@@ -14,11 +14,14 @@ test.describe('Experiments page', () => {
 
 		await expect(page.locator('.intro .emoji')).toHaveText('🧪');
 
-		const experimentCard = page.locator('.experiment-card').first();
-		await expect(experimentCard.locator('.card-icon')).toHaveText('🧪');
-		await expect(experimentCard.getByRole('heading', { level: 2, name: experimentTitle })).toBeVisible();
-		await expect(experimentCard.locator('.card-meta')).toContainText(experimentDateDisplay);
-		await expect(experimentCard.locator('.card-content > p')).toContainText(
+		const cards = page.locator('.experiment-card');
+		await expect(cards).toHaveCount(2);
+
+		const astroCard = cards.filter({ hasText: experimentTitle });
+		await expect(astroCard.locator('.card-icon')).toHaveText('🧪');
+		await expect(astroCard.getByRole('heading', { level: 2, name: experimentTitle })).toBeVisible();
+		await expect(astroCard.locator('.card-meta')).toContainText(experimentDateDisplay);
+		await expect(astroCard.locator('.card-content > p')).toContainText(
 			'Trying out Astro to understand if it fits a content-first portfolio setup',
 		);
 	});
