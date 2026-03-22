@@ -1,111 +1,217 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
+
+const pageTitle = `Blog | ${SITE_TITLE}`;
+const pageDescription = `${SITE_DESCRIPTION} — latest writing, experiments, and updates.`;
 ---
 
-<!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
+		<BaseHead title={pageTitle} description={pageDescription} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+			<section class="page-header">
+				<p class="eyebrow">Stories & notes</p>
+				<h1>From the workbench</h1>
+				<p class="lede">
+					Field reports on what I'm building, breaking, and learning along the way.
+				</p>
 			</section>
+			<div class="content-grid">
+				<section aria-label="Blog posts" class="posts">
+					<ul class="post-list">
+						{posts.map((post) => {
+							const postDate = post.data.date;
+							return (
+								<li class="post-card">
+									<article>
+										<header>
+											<a class="post-title" href={`/blog/${post.id}`}>
+												{post.data.title}
+											</a>
+											{postDate ? (
+												<FormattedDate date={postDate} />
+											) : (
+												<span class="post-date post-date--missing">Date TBA</span>
+											)}
+										</header>
+										{post.data.description && (
+											<p class="post-description">{post.data.description}</p>
+										)}
+										{post.data.tags?.length ? (
+											<ul class="tag-list">
+												{post.data.tags.map((tag) => (
+													<li>{tag}</li>
+												))}
+											</ul>
+										) : null}
+									</article>
+								</li>
+							);
+						})}
+					</ul>
+				</section>
+				<aside class="sidebar">
+					<p>Search &amp; archive coming soon</p>
+				</aside>
+			</div>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		max-width: 720px;
+		width: calc(100% - 2em);
+		margin: 0 auto;
+		padding: 3rem 0 4rem;
+	}
+
+	.page-header {
+		margin-bottom: 2.5rem;
+		text-align: left;
+	}
+
+	.eyebrow {
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		color: rgba(var(--gray), 0.8);
+		margin-bottom: 0.5rem;
+	}
+
+	h1 {
+		font-size: clamp(2rem, 3vw, 2.75rem);
+		margin: 0 0 0.5rem;
+		color: rgb(var(--black));
+	}
+
+	.lede {
+		margin: 0;
+		font-size: 1.1rem;
+		color: rgba(var(--gray-dark), 0.85);
+		max-width: 38ch;
+	}
+
+	.content-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+		gap: 2rem;
+	}
+
+	.posts {
+		margin: 0;
+	}
+
+	.post-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.post-card {
+		border: 1px solid rgba(var(--gray-light), 0.8);
+		border-radius: 1rem;
+		background: #fff;
+		box-shadow: 0 15px 30px rgba(var(--black), 0.04);
+		padding: 1.5rem;
+	}
+
+	.post-card article > header {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.post-title {
+		font-family: 'Atkinson', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+			sans-serif;
+		font-size: 1.35rem;
+		font-weight: 600;
+		text-decoration: none;
+		color: rgb(var(--black));
+	}
+
+	.post-title:hover,
+	.post-title:focus-visible {
+		color: var(--accent);
+	}
+
+.post-card time,
+.post-date {
+	font-size: 0.95rem;
+	color: rgba(var(--gray), 0.9);
+}
+
+.post-date--missing {
+	font-style: italic;
+}
+
+	.post-description {
+		margin: 0;
+		color: rgba(var(--gray-dark), 0.9);
+		line-height: 1.5;
+	}
+
+	.tag-list {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 1rem 0 0;
+		padding: 0;
+	}
+
+	.tag-list li {
+		background: rgba(var(--gray-light), 0.8);
+		color: rgb(var(--gray-dark));
+		border-radius: 999px;
+		padding: 0.25rem 0.75rem;
+		font-size: 0.85rem;
+	}
+
+	.sidebar {
+		border: 2px dashed rgba(var(--gray-light), 0.9);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		background: linear-gradient(180deg, rgba(var(--gray-light), 0.3), #fff);
+		color: rgba(var(--gray-dark), 0.85);
+		font-size: 0.95rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		box-shadow: 0 10px 20px rgba(var(--black), 0.03);
+	}
+
+	@media (max-width: 720px) {
+		main {
+			width: calc(100% - 1.5rem);
+			padding-top: 2rem;
+		}
+
+		.content-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.sidebar {
+			order: 2;
+		}
+	}
+</style>

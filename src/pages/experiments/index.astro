@@ -1,0 +1,169 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const experiments = (await getCollection('experiments')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const pageTitle = `Experiments | ${SITE_TITLE}`;
+const pageDescription = `${SITE_DESCRIPTION} — experiments and in-progress builds.`;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={pageTitle} description={pageDescription} />
+  </head>
+  <body>
+    <Header />
+    <main class="page">
+      <div class="intro">
+        <div class="emoji" aria-hidden="true">🧪</div>
+        <div>
+          <p class="eyebrow">Lab Notebook</p>
+          <h1>Experiments</h1>
+          <p class="lede">
+            Quick prototypes, sketches, and weekend builds. They may be rough around the edges,
+            but they always teach me something new.
+          </p>
+        </div>
+      </div>
+
+      {experiments.length === 0 ? (
+        <p class="empty">No experiments yet. Check back soon for fresh lab notes.</p>
+      ) : (
+        <div class="experiments">
+          {experiments.map((experiment) => (
+            <article class="experiment-card">
+              <div class="card-icon" aria-hidden="true">🧪</div>
+              <div class="card-content">
+                <div class="card-meta">
+                  <FormattedDate date={experiment.data.date} />
+                </div>
+                <h2>{experiment.data.title}</h2>
+                <p>{experiment.data.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </main>
+    <Footer />
+
+    <style>
+      :global(body) {
+        background: linear-gradient(var(--gray-gradient));
+        min-height: 100vh;
+      }
+
+      .page {
+        font-family: 'Atkinson', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 20px;
+        color: rgb(var(--black));
+        max-width: min(720px, calc(100% - 2em));
+        margin: 0 auto;
+        padding: 3rem 0 4rem;
+      }
+
+      .intro {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+        margin-bottom: 2.5rem;
+      }
+
+      .emoji {
+        font-size: 2.25rem;
+        filter: drop-shadow(0 6px 12px rgba(var(--gray), 0.2));
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.75rem;
+        color: rgb(var(--gray));
+        margin: 0 0 0.5rem;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        margin: 0 0 0.75rem;
+      }
+
+      .lede {
+        margin: 0;
+        color: rgb(var(--gray-dark));
+        line-height: 1.5;
+      }
+
+      .experiments {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .experiment-card {
+        display: flex;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+        border-left: 6px solid var(--accent);
+      }
+
+      .card-icon {
+        font-size: 1.75rem;
+      }
+
+      .card-meta {
+        font-size: 0.9rem;
+        color: rgb(var(--gray));
+        margin-bottom: 0.4rem;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+        margin: 0 0 0.6rem;
+      }
+
+      p {
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      .empty {
+        background: rgba(var(--gray-light), 0.4);
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        color: rgb(var(--gray-dark));
+        border: 1px dashed rgba(var(--gray), 0.4);
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          font-size: 18px;
+          padding: 2rem 0 3rem;
+        }
+
+        .intro {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        .experiment-card {
+          flex-direction: column;
+        }
+
+        .card-icon {
+          align-self: flex-start;
+        }
+      }
+    </style>
+  </body>
+</html>

@@ -13,38 +13,221 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero">
+				<p class="eyebrow">Build. Break. Learn.</p>
+				<h1>
+					Bold experiments from a curious engineer.
+				</h1>
+				<p class="subtitle">
+					My space for building things, breaking assumptions, and learning in
+					public.
+				</p>
+			</section>
+			<div class="container">
+				<section class="who">
+					<h2>Who I am</h2>
+					<p>
+						Call me Sreeman. I grew up on Java, and the smell of build servers at 2 a.m.
+						My career has been a steady march through backend systems that needed to scale,
+						communicate, and not fall over when traffic spiked. The tools have changed, but the
+						core obsession hasn't: how do you design software that feels boring in production
+						and exciting when you're building it?
+					</p>
+					<p>
+						E-commerce taught me the choreography of high-volume transactions and just how much
+						care you need to take with inventory when people expect next-day shipping. The
+						automotive aftermarket forced me to think in decades, not sprints—parts catalogs
+						never die, and compatibility is a beast. Payments demanded paranoia, cryptography,
+						and the humility to know every failed webhook is a customer left waiting. The food
+						industry, on the other hand, tuned my instincts for latency because your dinner
+						order can't wait on a noisy queue.
+					</p>
+					<p>
+						AWS came to be a guest during my journey and then became a constant thread through those chapters
+						—Lambda when it made sense, EC2 and S3 when it didn't, and until my love Kibana arrived, a toxic 
+						love-hate relationship with CloudWatch logs. These days I'm channeling that experience into 
+						AI adoption. I'm less excited about flashy demos and more interested in the boring plumbing 
+						that lets an enterprise utilizes a model to make Go Live a peaceful day without losing sleep.
+					</p>
+				</section>
+
+				<section class="why">
+					<h2>Why this site exists</h2>
+					<p>
+						It's 2026 and we have more platforms than time, but none of them feel truly ours.
+						This space is the antidote. No algorithms deciding who sees what, no engagement hacks,
+						no performative thought leadership. Just a quiet corner of the web where I can drop
+						in-progress ideas, half-formed diagrams, and the occasional rant about misused queues.
+					</p>
+					<p>
+						I write here to remember what I've learned, to leave breadcrumbs for future-me, and
+						to give anyone walking a similar path something real to grab onto. Learning in public
+						is messy, but it beats waiting until something is "perfect" enough for Medium or
+						LinkedIn. This site is mine, which means the experiments, the mistakes, and the wins
+						get to live in one place.
+					</p>
+				</section>
+
+				<section class="what">
+					<h2>What you'll find here</h2>
+					<div class="cards">
+						<a class="card" href="/blog">
+							<h3>Blog</h3>
+							<p>
+								Long-form posts on the mechanics of engineering, the realities of day-to-day 
+								techincal and non technical challenges I face and learn especially adopting AI,
+								and those small lessons that only show up after a production incident.
+							</p>
+						</a>
+						<a class="card" href="/projects">
+							<h3>Projects</h3>
+							<p>
+								A rotating shelf of things I'm building—from polished portfolio work to
+								internal tools that scratched a very specific "itch".
+							</p>
+						</a>
+						<a class="card" href="/experiments">
+							<h3>Experiments</h3>
+							<p>
+								Rough sketches, unusual stacks, and the frameworks I'm poking at before deciding
+								whether they're worth a rollout.
+							</p>
+						</a>
+					</div>
+				</section>
+
+				<section class="focus">
+					<h2>Current focus</h2>
+					<p>
+						My brain is currently looping on a single challenge: making the gap between "cool AI
+						demo" and "AI system quietly running in production" vanish. That means obsessing over
+						data contracts, governance that isn't a blocker, and the glue code that lets models
+						play nicely with legacy systems without demanding a rewrite. Expect plenty of notes
+						on adoption, tools orchestration, evaluation pipelines, and more...
+					</p>
+				</section>
+
+				<section class="connect">
+					<h2>Get in touch</h2>
+					<p>
+						If something here resonates—or if you're wrestling with similar problems—reach out.
+						I'd rather trade ideas than watch them rust.
+					</p>
+				</section>
+			</div>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		color: rgb(var(--black));
+		background: #fff;
+	}
+
+	.hero {
+		background: linear-gradient(135deg, var(--gray-gradient, #f5f7ff), rgba(var(--gray-light), 0.9)),
+			rgba(var(--gray-light), 0.8);
+		padding: 5rem 1.5rem 4rem;
+		text-align: center;
+		color: rgb(var(--gray-dark));
+	}
+
+	.hero h1 {
+		font-size: 3.052em;
+		max-width: 960px;
+		margin: 0 auto 1rem;
+		color: rgb(var(--black));
+	}
+
+	.hero .eyebrow {
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		font-size: 0.85rem;
+		color: var(--accent-dark);
+		margin-bottom: 1rem;
+	}
+
+	.hero .subtitle {
+		font-size: 1.25rem;
+		max-width: 720px;
+		margin: 0 auto;
+		color: rgb(var(--gray));
+	}
+
+	.container {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem 4rem;
+	}
+
+	section + section {
+		margin-top: 3rem;
+	}
+
+	h2 {
+		font-size: 2.441em;
+		margin-bottom: 1rem;
+	}
+
+	h3 {
+		font-size: 1.953em;
+		margin-bottom: 0.75rem;
+	}
+
+	p {
+		font-size: 1.1rem;
+		line-height: 1.8;
+		color: rgb(var(--gray-dark));
+		margin-bottom: 1.25rem;
+	}
+
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1rem;
+	}
+
+	.card {
+		display: block;
+		background: #fff;
+		border: 1px solid rgba(var(--gray-light), 0.8);
+		border-radius: 12px;
+		padding: 1.5rem;
+		text-decoration: none;
+		color: inherit;
+		box-shadow: 0 10px 25px rgba(15, 18, 25, 0.05);
+		transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+	}
+
+	.card:hover,
+	.card:focus-visible {
+		transform: translateY(-4px);
+		border-color: var(--accent);
+		box-shadow: 0 20px 40px rgba(35, 55, 255, 0.1);
+	}
+
+	.card p {
+		margin: 0;
+	}
+
+	.connect p {
+		margin-bottom: 0;
+	}
+
+	@media (max-width: 600px) {
+		.hero {
+			padding: 4rem 1rem 3rem;
+			text-align: left;
+		}
+
+		.hero h1 {
+			font-size: 2.488em;
+		}
+
+		.hero .subtitle {
+			font-size: 1.05rem;
+		}
+	}
+</style>

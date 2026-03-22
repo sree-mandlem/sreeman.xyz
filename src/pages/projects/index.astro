@@ -1,0 +1,236 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_AUTHOR } from '../../consts';
+
+const projects = (await getCollection('projects'))
+	.map((project) => ({
+		...project,
+		data: {
+			...project.data,
+			date: new Date(project.data.date),
+		},
+	}))
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={`Projects | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="page">
+			<section class="page__intro">
+				<p>
+					A selection of things {SITE_AUTHOR} built, broke, and learned from — each project pairs
+					an idea with a small stack and plenty of iteration.
+				</p>
+			</section>
+
+			<section class="projects" aria-label="Project list">
+				{projects.map((project) => (
+					<article class="card">
+						<header class="card__header">
+							<div class="card__title">
+								<h2>{project.data.title}</h2>
+								<p class="card__date">
+									<FormattedDate date={project.data.date} />
+								</p>
+							</div>
+							<p class="card__description">{project.data.description}</p>
+						</header>
+
+						{project.data.tech && project.data.tech.length > 0 && (
+							<ul class="card__tech">
+								{project.data.tech.map((stack) => (
+									<li class="card__tech-pill">{stack}</li>
+								))}
+							</ul>
+						)}
+
+						{(project.data.github || project.data.demo) && (
+							<footer class="card__links">
+								{project.data.github && (
+									<a
+										class="card__link"
+										href={project.data.github}
+										target="_blank"
+										rel="noreferrer noopener"
+									>
+										<span class="icon" aria-hidden="true">
+											<svg viewBox="0 0 24 24" role="img">
+												<title>GitHub</title>
+												<path
+													fill="currentColor"
+													d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.58.12.8-.25.8-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.36-1.28-1.72-1.28-1.72-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.19 1.18a11.05 11.05 0 0 1 5.8 0c2.22-1.5 3.18-1.18 3.18-1.18.63 1.58.24 2.75.12 3.04.74.8 1.19 1.82 1.19 3.08 0 4.43-2.68 5.4-5.24 5.69.41.35.77 1.03.77 2.07 0 1.49-.01 2.69-.01 3.05 0 .31.21.69.81.57A10.5 10.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"
+												/>
+											</svg>
+										</span>
+										<span>GitHub</span>
+									</a>
+								)}
+
+								{project.data.demo && (
+									<a
+										class="card__link"
+										href={project.data.demo}
+										target="_blank"
+										rel="noreferrer noopener"
+									>
+										<span class="icon" aria-hidden="true">
+											<svg viewBox="0 0 24 24" role="img">
+												<title>External link</title>
+												<path
+													fill="currentColor"
+													d="M14 3h7v7h-2.5V7.41l-7.3 7.3-1.77-1.77 7.3-7.3H14V3Zm5 10.5V21H3V6h7.5v2.5H5.5v10h10v-5h2.5Z"
+												/>
+											</svg>
+										</span>
+										<span>Live demo</span>
+									</a>
+								)}
+							</footer>
+						)}
+					</article>
+				))}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	:global(body) {
+		font-family: 'Atkinson', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+	}
+
+	.page {
+		max-width: 720px;
+		width: calc(100% - 2em);
+		margin: 0 auto;
+		padding: 3rem 0 4rem;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.page__intro p {
+		font-size: 1.1rem;
+		color: rgb(var(--gray-dark));
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	.projects {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.card {
+		background: white;
+		border: 1px solid rgba(var(--gray), 0.2);
+		border-radius: 16px;
+		padding: 1.5rem;
+		box-shadow: var(--box-shadow);
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.card__title {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+	}
+
+	.card__title h2 {
+		font-size: 1.35rem;
+		margin: 0;
+		color: rgb(var(--black));
+	}
+
+	.card__date {
+		margin: 0;
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+	}
+
+	.card__description {
+		margin: 0.5rem 0 0;
+		color: rgb(var(--gray-dark));
+		line-height: 1.6;
+	}
+
+	.card__tech {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	.card__tech-pill {
+		font-size: 0.85rem;
+		padding: 0.25rem 0.65rem;
+		border-radius: 999px;
+		background: rgba(35, 55, 255, 0.1);
+		color: var(--accent-dark);
+		font-weight: 600;
+	}
+
+	.card__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: auto;
+	}
+
+	.card__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.4rem 0.75rem;
+		border-radius: 999px;
+		border: 1px solid rgba(var(--gray), 0.4);
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+		transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+	}
+
+	.card__link .icon {
+		display: flex;
+		width: 1rem;
+		height: 1rem;
+	}
+
+	.card__link svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.card__link:hover,
+	.card__link:focus-visible {
+		background: var(--accent);
+		color: white;
+		border-color: var(--accent);
+	}
+
+	@media (max-width: 720px) {
+		.card__title {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.page {
+			padding-top: 2rem;
+		}
+	}
+</style>
