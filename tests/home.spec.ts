@@ -9,8 +9,7 @@ test.describe('Home page', () => {
 		await expect(page).toHaveTitle('Build. Break. Learn.');
 		await expect(page.locator('.hero .eyebrow')).toHaveText('Build. Break. Learn.');
 		await expect(page.getByRole('heading', { level: 1, name: heroHeading })).toBeVisible();
-		await expect(page.getByRole('heading', { level: 2, name: 'Why this site exists' })).toBeVisible();
-		await expect(page.getByRole('heading', { level: 2, name: 'What you\'ll find here' })).toBeVisible();
+		await expect(page.locator('.hero .subtitle')).toBeVisible();
 	});
 
 	test('links to core sections from cards', async ({ page }) => {

@@ -19,55 +19,35 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 					Bold experiments from a curious engineer.
 				</h1>
 				<p class="subtitle">
-					My space for building things, breaking assumptions, and learning in
-					public.
+					A quiet corner of the web where I drop in-progress ideas, share what I'm learning,
+					and leave breadcrumbs for anyone walking a similar path.
 				</p>
 			</section>
 			<div class="container">
-				<section class="why">
-					<h2>Why this site exists</h2>
-					<p>
-						It's 2026 and we have more platforms than time, but none of them feel truly ours.
-						This space is the antidote. No algorithms deciding who sees what, no engagement hacks,
-						no performative thought leadership. Just a quiet corner of the web where I can drop
-						in-progress ideas, half-formed diagrams, and the occasional rant about misused queues.
-					</p>
-					<p>
-						I write here to remember what I've learned, to leave breadcrumbs for future-me, and
-						to give anyone walking a similar path something real to grab onto. Learning in public
-						is messy, but it beats waiting until something is "perfect" enough for Medium or
-						LinkedIn. This site is mine, which means the experiments, the mistakes, and the wins
-						get to live in one place.
-					</p>
-				</section>
-
-				<section class="what">
-					<h2>What you'll find here</h2>
-					<div class="cards">
-						<a class="card" href="/blog">
-							<h3>Blog</h3>
-							<p>
-								Long-form posts on the mechanics of engineering, the realities of day-to-day 
-								techincal and non technical challenges I face and learn especially adopting AI,
-								and those small lessons that only show up after a production incident.
-							</p>
-						</a>
-						<a class="card" href="/projects">
-							<h3>Projects</h3>
-							<p>
-								A rotating shelf of things I'm building—from polished portfolio work to
-								internal tools that scratched a very specific "itch".
-							</p>
-						</a>
-						<a class="card" href="/experiments">
-							<h3>Experiments</h3>
-							<p>
-								Rough sketches, unusual stacks, and the frameworks I'm poking at before deciding
-								whether they're worth a rollout.
-							</p>
-						</a>
-					</div>
-				</section>
+				<div class="cards">
+					<a class="card" href="/blog">
+						<h3>Blog</h3>
+						<p>
+							Long-form posts on the mechanics of engineering, the realities of day-to-day
+							technical and non-technical challenges I face and learn especially adopting AI,
+							and those small lessons that only show up after a production incident.
+						</p>
+					</a>
+					<a class="card" href="/projects">
+						<h3>Projects</h3>
+						<p>
+							A rotating shelf of things I'm building—from polished portfolio work to
+							internal tools that scratched a very specific "itch".
+						</p>
+					</a>
+					<a class="card" href="/experiments">
+						<h3>Experiments</h3>
+						<p>
+							Rough sketches, unusual stacks, and the frameworks I'm poking at before deciding
+							whether they're worth a rollout.
+						</p>
+					</a>
+				</div>
 			</div>
 		</main>
 		<Footer />
@@ -113,16 +93,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	.container {
 		max-width: 720px;
 		margin: 0 auto;
-		padding: 3rem 1.5rem 4rem;
-	}
-
-	section + section {
-		margin-top: 3rem;
-	}
-
-	h2 {
-		font-size: 2.441em;
-		margin-bottom: 1rem;
+		padding: 2rem 1.5rem 4rem;
 	}
 
 	h3 {
