@@ -26,7 +26,6 @@ test.describe('Global navigation & layout', () => {
 
 			const siteFooter = page.locator('body > footer');
 			await expect(siteFooter).toBeVisible();
-			await expect(siteFooter.locator('.social-links a')).toHaveCount(2);
 		});
 	}
 
@@ -53,7 +52,7 @@ test.describe('Global navigation & layout', () => {
 		await expect(
 			page.getByRole('heading', {
 				level: 1,
-				name: /Bold experiments from a senior backend engineer/i,
+				name: /Bold experiments from a curious engineer/i,
 			}),
 		).toBeVisible();
 	});

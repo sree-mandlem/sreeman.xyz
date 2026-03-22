@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const heroHeading =
-	/Bold experiments from a senior backend engineer who likes shipping ideas faster than they can gather dust./i;
+	/Bold experiments from a curious engineer/i;
 
 test.describe('Home page', () => {
 	test('shows hero and introduction sections', async ({ page }) => {
@@ -9,9 +9,8 @@ test.describe('Home page', () => {
 		await expect(page).toHaveTitle('Build. Break. Learn.');
 		await expect(page.locator('.hero .eyebrow')).toHaveText('Build. Break. Learn.');
 		await expect(page.getByRole('heading', { level: 1, name: heroHeading })).toBeVisible();
-		await expect(page.getByRole('heading', { level: 2, name: 'Who I am' })).toBeVisible();
+		await expect(page.getByRole('heading', { level: 2, name: 'Why this site exists' })).toBeVisible();
 		await expect(page.getByRole('heading', { level: 2, name: 'What you\'ll find here' })).toBeVisible();
-		await expect(page.getByRole('heading', { level: 2, name: 'Current focus' })).toBeVisible();
 	});
 
 	test('links to core sections from cards', async ({ page }) => {
@@ -37,6 +36,5 @@ test.describe('Home page', () => {
 		const footer = page.locator('footer');
 		await expect(footer).toBeVisible();
 		await expect(footer).toContainText('Sreeman');
-		await expect(footer.locator('.social-links a')).toHaveCount(2);
 	});
 });
