@@ -15,7 +15,7 @@ test.describe('Experiments page', () => {
 		await expect(page.locator('.intro .emoji')).toHaveText('🧪');
 
 		const cards = page.locator('.experiment-card');
-		await expect(cards).toHaveCount(2);
+		await expect(cards).toHaveCount(3);
 
 		const astroCard = cards.filter({ hasText: experimentTitle });
 		await expect(astroCard.locator('.card-icon')).toHaveText('🧪');
