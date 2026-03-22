@@ -2,7 +2,7 @@
 
 ## 🧠 The System
 
-This file defines system how I work on `sreeman.xyz`, with the goal to make publishing consistent, simple, and sustainable.
+This file defines how I work on `sreeman.xyz`, with the goal to make publishing consistent, simple, and sustainable.
 
 Everything I publish is treated as a **deployment**. A deployment is any meaningful change that improves the site.
 
@@ -12,12 +12,12 @@ Everything I publish is treated as a **deployment**. A deployment is any meaning
 
 ### 1. Content Deployment
 - new blog post
-- new page
+- new project or experiment entry
 - update to existing content
 
-### 2. Project Deployment
-- new AI project
-- updates to project details, links, or demos
+### 2. Feature Deployment
+- new functionality (e.g., read time, search, tag filtering)
+- new page routes or detail pages
 
 ### 3. Design Deployment
 - homepage changes
@@ -44,7 +44,7 @@ What are you shipping?
 - quick test → experiment  
 - fix/improvement → site update  
 
-👉 If it adds value → it’s deployable  
+👉 If it adds value → it's deployable  
 
 ---
 
@@ -64,6 +64,7 @@ Make the change locally.
 
 - add/update content  
 - modify structure or UI  
+- add new features  
 
 👉 Think: small commit, clear intent  
 
@@ -72,12 +73,14 @@ Make the change locally.
 ### 4. Validate
 Before committing:
 
+- `npm run build` → does it build?
+- `npx playwright test` → do all tests pass?
 - is it readable?  
 - is it correct?  
 - does it render properly?  
 - are links working?  
 
-👉 Basic sanity check (no over-engineering)  
+👉 Always run build + tests before deploying  
 
 ---
 
@@ -87,30 +90,32 @@ Use clear, intent-driven messages:
 - `deploy: add post on RAG basics`  
 - `deploy: add AI agent project`  
 - `deploy: update homepage layout`  
-- `deploy: fix broken links`  
+- `fix: broken links on blog index`  
 
 👉 One commit = one logical change  
+👉 Use `Co-authored-by: Copilot` trailer when AI-assisted  
 
 ---
 
-### 6. Push (Trigger Deploy)
+### 6. Deploy & Push
 Run:
 
-    git add .
-    git commit -m "deploy: <short description>"
-    git push
+    npm run build && npm run deploy
+    git push origin main
 
-👉 Push = deployment trigger  
+👉 `npm run deploy` does NOT rebuild — always build first  
+👉 Push to GitHub after deploying so the repo stays in sync  
 
 ---
 
 ### 7. Verify in Production
 After deploy:
 
-- page loads correctly  
+- page loads correctly at https://sreeman.xyz
 - content is visible  
 - no regressions  
 - navigation works  
+- new pages are accessible  
 
 👉 If broken → fix fast, redeploy  
 
@@ -120,5 +125,7 @@ After deploy:
 
 - ship small changes frequently  
 - prefer clarity over completeness  
-- don’t wait for “perfect”  
+- don't wait for "perfect"  
 - treat content like code  
+- always run tests before deploying  
+- build before deploy (they're separate commands)
