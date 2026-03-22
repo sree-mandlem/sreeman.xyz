@@ -24,7 +24,7 @@ test.describe('Projects page', () => {
 		);
 
 		const techPills = projectCard.locator('.card__tech-pill');
-		await expect(techPills).toHaveText(['typescript', 'cloudflare', 'astro']);
+		await expect(techPills).toHaveText(['astro', 'typescript', 'cloudflare-workers', 'playwright']);
 
 		const githubLink = projectCard.getByRole('link', { name: 'GitHub' });
 		await expect(githubLink).toHaveAttribute('href', 'https://github.com/sree-mandlem/sreeman.xyz');
