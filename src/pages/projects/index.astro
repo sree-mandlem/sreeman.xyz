@@ -36,7 +36,7 @@ const projects = (await getCollection('projects'))
 					<article class="card">
 						<header class="card__header">
 							<div class="card__title">
-								<h2>{project.data.title}</h2>
+								<h2><a href={`/projects/${project.id}`}>{project.data.title}</a></h2>
 								<p class="card__date">
 									<FormattedDate date={project.data.date} />
 								</p>

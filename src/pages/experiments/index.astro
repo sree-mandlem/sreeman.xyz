@@ -43,7 +43,7 @@ const pageDescription = `${SITE_DESCRIPTION} — experiments and in-progress bui
                 <div class="card-meta">
                   <FormattedDate date={experiment.data.date} />
                 </div>
-                <h2>{experiment.data.title}</h2>
+                <h2><a href={`/experiments/${experiment.id}`}>{experiment.data.title}</a></h2>
                 <p>{experiment.data.description}</p>
               </div>
             </article>
