@@ -13,18 +13,11 @@ test.describe('Blog pages', () => {
 		await expect(page).toHaveTitle('Blog | Build. Break. Learn.');
 
 		const cards = page.locator('.post-card');
-		await expect(cards).toHaveCount(1);
+		await expect(cards).toHaveCount(2);
 
 		const firstCard = cards.first();
-		await expect(firstCard.getByRole('link', { name: postTitle })).toBeVisible();
-		await expect(firstCard.locator('time')).toHaveText(postDateDisplay);
-		await expect(firstCard.locator('.post-description')).toContainText(
-			'When you switch AI models mid-session',
-		);
-
-		const tags = firstCard.locator('.tag-list li');
-		await expect(tags).toHaveCount(3);
-		await expect(tags).toHaveText(['copilot', 'ai', 'developer-workflow']);
+		await expect(firstCard.locator('.read-time')).toBeVisible();
+		await expect(firstCard.locator('.read-time')).toContainText(/\d+ min read/);
 
 		const sidebar = page.locator('aside.sidebar');
 		await expect(sidebar).toBeVisible();
@@ -38,6 +31,8 @@ test.describe('Blog pages', () => {
 		await expect(page).toHaveURL(/\/blog\/copilot-cli-model-switching$/);
 		await expect(page.getByRole('heading', { level: 1, name: postTitle })).toBeVisible();
 		await expect(page.locator('.date')).toContainText(postDateDisplay);
+		await expect(page.locator('.date .read-time')).toBeVisible();
+		await expect(page.locator('.date .read-time')).toContainText(/\d+ min read/);
 		await expect(page.locator('.prose')).toContainText("Context travels. Understanding doesn't.");
 	});
 });

@@ -5,6 +5,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getReadTime } from '../../utils/readTime';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -33,6 +34,7 @@ const pageDescription = `${SITE_DESCRIPTION} — latest writing, experiments, an
 					<ul class="post-list">
 						{posts.map((post) => {
 							const postDate = post.data.date;
+							const readTime = post.body ? getReadTime(post.body) : null;
 							return (
 								<li class="post-card">
 									<article>
@@ -40,11 +42,14 @@ const pageDescription = `${SITE_DESCRIPTION} — latest writing, experiments, an
 											<a class="post-title" href={`/blog/${post.id}`}>
 												{post.data.title}
 											</a>
-											{postDate ? (
-												<FormattedDate date={postDate} />
-											) : (
-												<span class="post-date post-date--missing">Date TBA</span>
-											)}
+											<div class="post-meta">
+												{postDate ? (
+													<FormattedDate date={postDate} />
+												) : (
+													<span class="post-date post-date--missing">Date TBA</span>
+												)}
+												{readTime && <span class="read-time">{readTime}</span>}
+											</div>
 										</header>
 										{post.data.description && (
 											<p class="post-description">{post.data.description}</p>
@@ -157,6 +162,22 @@ const pageDescription = `${SITE_DESCRIPTION} — latest writing, experiments, an
 .post-date {
 	font-size: 0.95rem;
 	color: rgba(var(--gray), 0.9);
+}
+
+.post-meta {
+	display: flex;
+	align-items: center;
+	gap: 0.75em;
+}
+
+.read-time {
+	font-size: 0.85rem;
+	color: rgba(var(--gray), 0.7);
+}
+
+.read-time::before {
+	content: "·";
+	margin-right: 0.75em;
 }
 
 .post-date--missing {
